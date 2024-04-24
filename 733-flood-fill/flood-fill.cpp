@@ -1,14 +1,15 @@
 class Solution {
-    void dfs(vector<vector<int>>&image,int sr,int sc,int colr,int color,vector<vector<int>>&vis)
+    void dfs(vector<vector<int>>&image,int sr,int sc,int colr,int color)
     {
-    if(sr>=image.size() || sr<0 || sc>=image[0].size() || sc<0 || vis[sr][sc]) return;
+    if(sr>=image.size() || sr<0 || sc>=image[0].size() || sc<0) return;
   if(image[sr][sc]!=colr) return;
+  if(image[sr][sc]==color) return;
         image[sr][sc]=color;
-        vis[sr][sc]=1;
-        dfs(image,sr+1,sc,colr,color,vis);
-         dfs(image,sr-1,sc,colr,color,vis);
-          dfs(image,sr,sc+1,colr,color,vis);
-           dfs(image,sr,sc-1,colr,color,vis);
+        // vis[sr][sc]=1;
+        dfs(image,sr+1,sc,colr,color);
+         dfs(image,sr-1,sc,colr,color);
+          dfs(image,sr,sc+1,colr,color);
+           dfs(image,sr,sc-1,colr,color);
 
     }
 void bfs(vector<vector<int>>&image,int sr,int sc,int color)
@@ -48,9 +49,9 @@ public:
         //    bfs(image,sr,sc,color);
         int n=image.size();
         int m=image[0].size();
-        vector<vector<int>>vis(n+1,vector<int>(m+1,0));
+       
         int colr=image[sr][sc];
-        dfs(image,sr,sc,colr,color,vis);
+        dfs(image,sr,sc,colr,color);
            return image; 
     }
 };
