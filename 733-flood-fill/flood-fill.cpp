@@ -1,4 +1,16 @@
 class Solution {
+    void dfs(vector<vector<int>>&image,int sr,int sc,int colr,int color,vector<vector<int>>&vis)
+    {
+    if(sr>=image.size() || sr<0 || sc>=image[0].size() || sc<0 || vis[sr][sc]) return;
+  if(image[sr][sc]!=colr) return;
+        image[sr][sc]=color;
+        vis[sr][sc]=1;
+        dfs(image,sr+1,sc,colr,color,vis);
+         dfs(image,sr-1,sc,colr,color,vis);
+          dfs(image,sr,sc+1,colr,color,vis);
+           dfs(image,sr,sc-1,colr,color,vis);
+
+    }
 void bfs(vector<vector<int>>&image,int sr,int sc,int color)
 {
     int colr=image[sr][sc];
@@ -33,7 +45,12 @@ void bfs(vector<vector<int>>&image,int sr,int sc,int color)
 }
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-           bfs(image,sr,sc,color);
+        //    bfs(image,sr,sc,color);
+        int n=image.size();
+        int m=image[0].size();
+        vector<vector<int>>vis(n+1,vector<int>(m+1,0));
+        int colr=image[sr][sc];
+        dfs(image,sr,sc,colr,color,vis);
            return image; 
     }
 };
