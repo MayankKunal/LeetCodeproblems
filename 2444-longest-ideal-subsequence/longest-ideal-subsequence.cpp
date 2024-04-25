@@ -5,18 +5,18 @@ private:
             return 0;
         }
         
-        if(dp[ind][prev] != -1)
-            return dp[ind][prev];
+        if(dp[ind][prev+1] != -1)
+            return dp[ind][prev+1];
         
         int take = 0;
-        int ch = s[ind] - 'a' + 1;
+        int ch = s[ind] - 'a';
         
-        if (prev == 0 or abs(ch - prev) <= k) {
+        if (prev == -1 or abs(ch - prev) <= k) {
             take = solve(ind - 1, s, ch, k, dp) + 1;
         }
         
         int notTake = solve(ind - 1, s, prev, k, dp);
-        return dp[ind][prev] = max(take, notTake);
+        return dp[ind][prev+1] = max(take, notTake);
     }
 public:
     
@@ -25,6 +25,6 @@ public:
         int n = s.size();
         vector<vector<int>> dp(n, vector<int>(27, -1)); // 27 because space for 26 alphabets and one more for '0';
         
-        return solve(n - 1, s, 0, k, dp);
+        return solve(n - 1, s, -1, k, dp);
     }
 };
