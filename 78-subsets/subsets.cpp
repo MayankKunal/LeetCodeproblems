@@ -16,7 +16,7 @@ public:
         int n=nums.size();
         vector<vector<int>>ans;
         help(0,n,nums,temp,ans);
-        sort(ans.begin(),ans.end());
+        // sort(ans.begin(),ans.end());
         return ans;
     }
 };
