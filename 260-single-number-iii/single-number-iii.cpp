@@ -1,17 +1,31 @@
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
-        unordered_map<int,int>mp;
+     int res=0;
         for(int x:nums)
         {
-            mp[x]++;
+            res^=x;
         }
-        vector<int>ans;
-        for(auto &x:mp)
+        // vector<int>ans;
+        int i=0;
+        while((res&1)!=1)
         {
-            if(x.second==1)
-             ans.push_back(x.first);
+            i++;
+            res=res>>1;
         }
-        return ans;
+        int A=0;
+        int B=0;
+        for(int x:nums)
+        {
+            if(((x>>i)&1)==1)
+            {
+                A^=x;
+            }
+            else
+            {
+                B^=x;
+            }
+        }
+        return {A,B};
     }
 };
