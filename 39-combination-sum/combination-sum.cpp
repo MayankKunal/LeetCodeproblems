@@ -9,11 +9,14 @@ class Solution {
             }
             return;
         }
-        if(target<0) return;
+        
         help(i+1,n,candidates,target,temp,ans);
+        if(target>=candidates[i])
+        {
         temp.push_back(candidates[i]);
         help(i,n,candidates,target-candidates[i],temp,ans);
         temp.pop_back();
+        }
 
     }
 public:
