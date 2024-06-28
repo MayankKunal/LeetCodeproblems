@@ -1,24 +1,33 @@
 class Solution {
-    int help(int idx,int n,string s,unordered_set<string>&st,vector<int>&dp)
+   bool help(int i,int n,string s,unordered_map<string,int>&wordDict,vector<int>&dp)
     {
-        if(idx==n) return 1;
-        if(dp[idx]!=-1) return dp[idx];
-        string temp="";
-        for(int j=idx;j<n;j++)
+        if(i==n)
         {
-            temp+=s[j];
-            if(st.find(temp)!=st.end())
-            {
-                if(help(j+1,n,s,st,dp)) return dp[idx]=1;
-            }
+           return true;
         }
-        return dp[idx]=0;
+        if(dp[i]!=-1) return dp[i];
+        for(int idx=i;idx<n;idx++)
+        {
+            if(wordDict.find(s.substr(i,idx-i+1))!=wordDict.end())
+            {
+                 if(help(idx+1,n,s,wordDict,dp)) return dp[i]=true;
+            }   
+        }
+
+        return dp[i]=false;
+         
     }
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
-        unordered_set<string>st;
-        st.insert(wordDict.begin(),wordDict.end());
-        vector<int>dp(s.size()+1,-1);
-        return help(0,s.size(),s,st,dp);
+        
+        unordered_map<string,int>mp;
+        for(auto x:wordDict)
+        {
+            mp[x]++;
+        }
+        int n=s.size();
+        vector<int>dp(n+1,-1);
+        return help(0,s.size(),s,mp,dp);
+       
     }
 };
