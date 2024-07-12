@@ -1,44 +1,59 @@
 class Solution {
+    void reverse(stack<char>&st)
+    {
+        if(st.empty()) return;
+
+        char ele=st.top();
+        st.pop();
+        reverse(st);
+        st.push(ele);
+    }
 public:
     int maximumGain(string s, int x, int y) {
-        int res = 0;
-        string top, bot;
-        int top_score, bot_score;
-
-        if (y > x) {
-            top = "ba";
-            top_score = y;
-            bot = "ab";
-            bot_score = x;
-        } else {
-            top = "ab";
-            top_score = x;
-            bot = "ba";
-            bot_score = y;
+        
+        string s1="",s2="";
+        if(x>y)
+        {
+            s1="ab";
+            s2="ba";
         }
-
-        // Removing first top substrings cause they give more points
-        vector<char> stack;
-        for (char ch : s) {  // Changed 'char' to 'ch'
-            if (ch == top[1] && !stack.empty() && stack.back() == top[0]) {
-                res += top_score;
-                stack.pop_back();
-            } else {
-                stack.push_back(ch);
-            }
+        else
+        {
+            swap(x,y);
+            s1="ba";
+            s2="ab";
         }
-
-        // Removing bot substrings cause they give less or equal amount of scores
-        vector<char> new_stack;
-        for (char ch : stack) {  // Changed 'char' to 'ch'
-            if (ch == bot[1] && !new_stack.empty() && new_stack.back() == bot[0]) {
-                res += bot_score;
-                new_stack.pop_back();
-            } else {
-                new_stack.push_back(ch);
-            }
+        int n=s.size();
+        int ans=0;
+        string st="";
+        for(int i=0;i<n;i++)
+        {
+          if(!st.empty() && st.back()==s1[0] && s[i]==s1[1])
+          {
+            st.pop_back();
+            ans+=x;
+          }
+          else
+          {
+            st.push_back(s[i]);
+          }
         }
-
-        return res;
+  string st2="";
+ 
+   int m=st.size();
+       for(int i=0;i<m;i++)
+       {
+               if(!st2.empty() && st2.back()==s2[0] && st[i]==s2[1])
+          {
+            st2.pop_back();
+            ans+=y;
+          }
+          else
+          {
+            st2.push_back(st[i]);
+          }
+       }
+ cout<<"s "<<s<<"s1 "<<st<<"s2 "<<st2;
+        return ans;
     }
 };
