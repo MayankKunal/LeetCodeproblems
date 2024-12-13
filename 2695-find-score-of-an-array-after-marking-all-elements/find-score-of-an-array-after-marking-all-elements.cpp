@@ -1,35 +1,37 @@
 class Solution {
 public:
     long long findScore(vector<int>& nums) {
-        int n = nums.size();
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;  // Min-heap based on value
-
-        // Build the min-heap with (value, index) pairs
-        for (int i = 0; i < n; i++) {
-            minHeap.push({nums[i], i});
+        
+        int n=nums.size();
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        for(int i=0;i<n;i++)
+        {
+            pq.push({nums[i],i});
         }
-
-        long long score = 0;  // Use long long to handle overflow
-
-        // Process elements in min-heap
-        while (!minHeap.empty()) {
-            auto curr = minHeap.top();
-            minHeap.pop();
-            int num = curr.first;
-            int idx = curr.second;
-
-            if (nums[idx] != -1) {  // Process only if not already marked
-                score += num;
-                nums[idx] = -1;  // Mark the current index
-                if (idx > 0 && nums[idx - 1] != -1) {
-                    nums[idx - 1] = -1;  // Mark the left neighbor
-                }
-                if (idx < n - 1 && nums[idx + 1] != -1) {
-                    nums[idx + 1] = -1;  // Mark the right neighbor
-                }
-            }
+        long long ans=0;
+        while(!pq.empty())
+        {
+              auto it=pq.top();
+              pq.pop();
+              int curr=it.first;
+              int idx=it.second;
+              if(nums[idx]!=-1)
+              {
+                ans+=curr;
+                nums[idx]=-1;
+              
+              if(idx>0 && nums[idx-1]!=-1)
+              {
+                //    ans+=nums[idx-1];
+                   nums[idx-1]=-1;
+              }
+              if(idx<n-1 && nums[idx+1]!=-1)
+              {
+                // ans+=nums[idx+1];
+                nums[idx+1]=-1;
+              }
+              }
         }
-
-        return score;
+        return ans;
     }
 };
