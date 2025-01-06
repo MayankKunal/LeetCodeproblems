@@ -1,17 +1,21 @@
 class Solution {
 public:
     vector<int> minOperations(string boxes) {
-        vector<int> answer(boxes.length());
-        for (int currentBox = 0; currentBox < boxes.length(); currentBox++) {
-            // If the current box contains a ball, calculate the number of moves
-            // for every box.
-            if (boxes[currentBox] == '1') {
-                for (int newPosition = 0; newPosition < boxes.length();
-                     newPosition++) {
-                    answer[newPosition] += abs(newPosition - currentBox);
-                }
-            }
+        
+        int n=boxes.size();
+        unordered_set<int>st;
+        for(int i=0;i<n;i++)
+        {
+            if(boxes[i]=='1') st.insert(i);
         }
-        return answer;
+        vector<int>ans(n,0);
+        for(int i=0;i<n;i++)
+        {
+             for(auto x:st)
+             {
+                ans[i]+=abs(x-i);
+             }
+        }
+        return ans;
     }
 };
