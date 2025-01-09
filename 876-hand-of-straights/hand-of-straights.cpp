@@ -1,33 +1,31 @@
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
-        int n=hand.size();
-        if(n%groupSize)
-        {
-            return false;
+        map<int, int> mp;
+        int n = hand.size();
+        if (n % groupSize != 0) return false;
+
+        // Count the frequency of each card
+        for (int card : hand) {
+            mp[card]++;
         }
-        map<int,int>mp;
-        for(int x:hand)
-        {
-            mp[x]++;
-        }
-        sort(hand.begin(),hand.end());
-        for(int x:hand)
-        {
-            if(mp[x]==0)
-            {
-                continue;
-            }
-            for(int j=0;j<groupSize;j++)
-            {
-                int currCard=x+j;
-                if(mp[currCard]==0)
-                {
-                    return false;
+
+        // Try to construct groups
+        while (!mp.empty()) {
+            int minVal = mp.begin()->first; // Get the smallest card
+            // Try to construct a group of groupSize starting from minVal
+            for (int i = 0; i < groupSize; i++) {
+                if (mp[minVal + i] > 0) {
+                    mp[minVal + i]--;
+                    if (mp[minVal + i] == 0) {
+                        mp.erase(minVal + i);
+                    }
+                } else {
+                    return false; // If a card is missing, return false
                 }
-                mp[currCard]--;
             }
         }
+
         return true;
     }
 };
