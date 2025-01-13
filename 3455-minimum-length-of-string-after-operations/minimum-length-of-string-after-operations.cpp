@@ -11,11 +11,9 @@ public:
         int ans=0;
         for(auto x:mp)
         {
-             if(x.second<3) ans+=x.second;
-             else
-             {
+            
                 ans+=(x.second%2==0)?2:1;
-             }
+             
         }
         return ans;
     }
