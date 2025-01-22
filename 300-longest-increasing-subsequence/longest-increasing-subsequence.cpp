@@ -21,7 +21,21 @@ public:
         
         int n=nums.size();
  
-         vector<vector<int>>dp(n+1,vector<int>(n+2,-1));
-        return help(0,n,nums,-1,dp);
+        //  vector<vector<int>>dp1(n+1,vector<int>(n+2,-1));
+        // return help(0,n,nums,-1,dp);
+        int res=1;
+        vector<int>ans(n,1);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[j]<nums[i])
+                {
+                ans[i]=max(ans[i],ans[j]+1);
+                res=max(res,ans[i]);
+                }
+            }
+        }
+        return res;
     }
 };
