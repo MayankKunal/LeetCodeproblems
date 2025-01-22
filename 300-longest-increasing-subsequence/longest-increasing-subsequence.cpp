@@ -23,19 +23,35 @@ public:
  
         //  vector<vector<int>>dp1(n+1,vector<int>(n+2,-1));
         // return help(0,n,nums,-1,dp);
-        int res=1;
-        vector<int>ans(n,1);
-        for(int i=0;i<n;i++)
+        // int res=1;
+        // vector<int>ans(n,1);
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(int j=0;j<i;j++)
+        //     {
+        //         if(nums[j]<nums[i])
+        //         {
+        //         ans[i]=max(ans[i],ans[j]+1);
+        //         res=max(res,ans[i]);
+        //         }
+        //     }
+        // }
+        // return res;
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int i=n-1;i>=0;i--)
         {
-            for(int j=0;j<i;j++)
+            for(int j=i-1;j>=-1;j--)
             {
-                if(nums[j]<nums[i])
-                {
-                ans[i]=max(ans[i],ans[j]+1);
-                res=max(res,ans[i]);
-                }
+                int take=0;
+        if(j==-1 || nums[j]<nums[i])
+        {
+            take=1+dp[i+1][i+1];
+        }
+              int notTake=dp[i+1][j+1];
+             dp[i][j+1]=max(take,notTake);
             }
         }
-        return res;
+         return dp[0][0];
     }
+
 };
