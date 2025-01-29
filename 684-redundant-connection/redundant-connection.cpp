@@ -9,19 +9,19 @@ class Solution {
     {
         int Node1=edge[0];
         int Node2=edge[1];
-         Node1=findParent(Node1,parent);
-        Node2=findParent(Node2,parent);
-        if(Node1==Node2)
+         int p1=findParent(Node1,parent);
+        int p2=findParent(Node2,parent);
+        if(p1==p2)
             return false;
-        if(graphSize[Node1]>=graphSize[Node2])
+        if(graphSize[p1]>=graphSize[p2])
         {
-            parent[Node2]=Node1;
-            graphSize[Node1]+=graphSize[Node2];
+            parent[p2]=p1;
+            graphSize[p1]+=graphSize[p2];
         }
         else
         {
-            parent[Node1]=Node2;
-            graphSize[Node2]+=graphSize[Node1];
+            parent[p1]=p2;
+            graphSize[p2]+=graphSize[p1];
         }
         return true;
     }
