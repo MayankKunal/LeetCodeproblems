@@ -1,30 +1,21 @@
 class Solution {
 public:
     string clearDigits(string s) {
-        
-        stack<int>st;
-        for(int i=0;i<s.size();i++)
+     int n=s.size();
+     string ans="";
+     for(int i=0;i<n;i++)
+     {
+        if(s[i]>='0' && s[i]<='9')
         {
-            if(s[i]>='0' && s[i]<='9')
-            {
-                if(!st.empty())
-                {
-                    st.pop();
-                }
-            }
-            else
-            {
-                st.push(i);
-            }
+            if(ans.size()==0) continue;
+            else ans.pop_back();
         }
-       string ans="";
-        while(!st.empty())
+        else
         {
-            int idx=st.top();
-            ans+=s[idx];
-            st.pop();
+            ans+=s[i];
         }
-        reverse(ans.begin(),ans.end());
-        return ans;
+     }   
+
+     return ans;
     }
 };
