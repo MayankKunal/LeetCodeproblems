@@ -11,11 +11,11 @@ public:
         for(int i=0;i<n;i++)
         {
            sum+=arr[i];
-           if(sum%2==0 && mp.find(1)!=mp.end())
+           if(sum%2==0)
            {
             ans=(ans+mp[1]);
            }
-           else if(sum%2==1 && mp.find(0)!=mp.end())
+           else if(sum%2==1)
            {
             ans=(ans+mp[0]);
            }
