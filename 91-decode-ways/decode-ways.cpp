@@ -1,10 +1,10 @@
 class Solution {
     int help(int idx,int n, string&digits,vector<int>&dp)
     {
-        if(idx==n-1){
-            if(digits[idx]!='0') return 1;
-            return 0;
-        }
+        // if(idx==n-1){
+        //     if(digits[idx]!='0') return 1;
+        //     return 0;
+        // }
         if(idx==n) return 1;
         if(digits[idx]=='0') return 0;
         if(dp[idx]!=-1) return dp[idx];
