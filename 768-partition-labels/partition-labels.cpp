@@ -3,44 +3,22 @@ public:
     vector<int> partitionLabels(string s) {
         
         int n=s.size();
-        unordered_map<char,int>last;
-        unordered_map<char,int>start;
-        
+        unordered_map<char,int>mp;
         for(int i=0;i<n;i++)
         {
-            if(start.find(s[i])==start.end())
+            mp[s[i]]=i;
+        }
+        int st=0,end=0;
+        vector<int>ans;
+        for(int i=0;i<n;i++)
+        {
+            end=max(end,mp[s[i]]);
+            if(i==end)
             {
-                start[s[i]]=i;
+                ans.push_back(end-st+1);
+                st=i+1;
             }
-            last[s[i]]=i;
         }
-
-       vector<pair<int,int>>arr;
-        for(int i=0;i<n;i++)
-        {
-        
-            arr.push_back({start[s[i]],last[s[i]]});
-        }
-        sort(arr.begin(),arr.end());
-
-   int  st=arr[0].first;
-   int e=arr[0].second;
-     vector<int>ans;
-        for(int i=1;i<arr.size();i++)
-        {
-           if(arr[i].first<e)
-           {
-            st=min(st,arr[i].first);
-            e=max(e,arr[i].second);
-           }
-           else
-           {
-              ans.push_back(e-st+1);
-              st=arr[i].first;
-              e=arr[i].second;
-           }
-        }
-        ans.push_back(e-st+1);
         return ans;
     }
 };
