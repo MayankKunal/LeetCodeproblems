@@ -1,5 +1,5 @@
 class Solution {
-    string describe(string s)
+    string RLE(string s)
     {
         int n=s.size();
         int count=1;
@@ -24,7 +24,7 @@ public:
         string ans="1";
         for(int i=1;i<n;i++)
         {
-           ans=describe(ans);
+           ans=RLE(ans);
         }
         return ans;
     }
