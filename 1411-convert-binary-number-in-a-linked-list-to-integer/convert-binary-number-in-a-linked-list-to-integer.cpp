@@ -9,35 +9,16 @@
  * };
  */
 class Solution {
-    ListNode*reverse(ListNode*head)
-    {
-        ListNode*prev=NULL;
-        ListNode*curr=head;
-        ListNode*nxt=NULL;
-        while(curr!=NULL)
-        {
-            nxt=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=nxt;
-        }
-        return prev;
-    }
 public:
     int getDecimalValue(ListNode* head) {
         
-        ListNode*temp=reverse(head);
-        int value=0;
-        int pow=1;
-        while(temp!=NULL)
-        {
+        int ans=0;
 
-            int currVal=temp->val;
-            cout<<currVal;
-            value+=(pow*currVal);
-            pow*=2;
-            temp=temp->next;
+        while(head!=NULL)
+        {
+            ans=(ans<<1)+head->val;
+            head=head->next;
         }
-        return value;
+        return ans;
     }
 };
