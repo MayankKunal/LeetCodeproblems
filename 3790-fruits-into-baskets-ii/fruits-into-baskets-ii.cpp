@@ -29,9 +29,9 @@ public:
          int fruitCount=fruits[i];
          for(int j=0;j<n;j++)
          {
-            if(baskets[j]>=fruits[i] && mp.find(j)==mp.end())
+            if(baskets[j]>=fruits[i] )
             {
-                mp[j]++;
+                baskets[j]=0;
                 count++;
                 break;
             }
