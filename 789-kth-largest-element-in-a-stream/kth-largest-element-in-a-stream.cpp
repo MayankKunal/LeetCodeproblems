@@ -6,15 +6,16 @@ public:
         m=k;
         int n=nums.size();
        
-        for(int i=0;i<min(k,n);i++)
+        for(int i=0;i<n;i++)
         {
             pq.push(nums[i]);
         }
-        for(int i=k;i<n;i++)
-        {
-            pq.push(nums[i]);
-            pq.pop();
-        }
+        while(pq.size()>m) pq.pop();
+        // for(int i=k;i<n;i++)
+        // {
+        //     pq.push(nums[i]);
+        //     pq.pop();
+        // }
     }
     
     int add(int val) {
