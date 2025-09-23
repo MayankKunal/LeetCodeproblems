@@ -19,7 +19,7 @@ public:
     
     int add(int val) {
         pq.push(val);
-        while(pq.size()>m) pq.pop();
+        if(pq.size()>m) pq.pop();
         return pq.top();
     }
 };
