@@ -1,4 +1,21 @@
 class Solution {
+    bool help(int node,unordered_map<int,vector<int>>&graph,vector<int>&vis,vector<int>&pathVis)
+    {
+        vis[node]=1;
+        pathVis[node]=1;
+        for(auto adjNode:graph[node])
+        {
+            if(!vis[adjNode])
+            {
+                vis[adjNode]=1;
+                if(!help(adjNode,graph,vis,pathVis)) return false;
+            }
+            if(pathVis[adjNode]) return false;
+        }
+        pathVis[node]=0;
+        return true;
+
+    }
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         
@@ -7,40 +24,19 @@ public:
         vector<int>inDegree(n,0);
         for(auto x:prerequisites)
         {
-            graph[x[1]].push_back(x[0]);
             inDegree[x[0]]++;
+            graph[x[1]].push_back(x[0]);
         }
-        queue<int>q;
+       
         vector<int>vis(n,0);
-     for(int i=0;i<n;i++)
-     {
-        if(inDegree[i]==0)
+      vector<int>pathVis(n,0);
+        for(int i=0;i<n;i++)
         {
-            q.push(i);
-            vis[i]=true;
-        }
-     }
-     while(!q.empty())
-     {
-        int node=q.front();
-        
-        q.pop();
-        for(auto x:graph[node])
-        {
-            inDegree[x]--;
-            if(inDegree[x]==0 && !vis[x])
+            if(!vis[i])
             {
-                vis[x]=1;
-                q.push(x) ;
+                if(!help(i,graph,vis,pathVis)) return false;
             }
         }
-     }
-     for(int x:inDegree)
-     {
-        if(x!=0) return false;
-     }
-
-      return true;
-
+        return true;
     }
 };
