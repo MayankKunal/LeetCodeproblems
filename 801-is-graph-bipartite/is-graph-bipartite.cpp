@@ -1,15 +1,24 @@
 class Solution {
-    bool dfs(int src,vector<vector<int>>&graph,int color,vector<int>&col)
+    bool help(int src,vector<vector<int>>&graph,vector<int>&col,int curr)
     {
-        col[src]=color;
-        for(int adjNode:graph[src])
+        col[src]=curr;
+        queue<pair<int,int>>q;
+        q.push({src,curr});
+        while(!q.empty())
         {
-            if(col[adjNode]==-1)
-            {
-              if(!(dfs(adjNode,graph,!color,col))) return false;
-              
-            }
-            else if(col[adjNode]==color) return false; 
+           auto it=q.front();
+           int node=it.first;
+           int currCol=it.second;
+           q.pop();
+           for(auto adjNode:graph[node])
+           {
+               if(col[adjNode]==-1)
+               {
+                    col[adjNode]=!currCol;
+                    q.push({adjNode,!currCol});
+               }
+               else if(currCol==col[adjNode]) return false;
+           }
         }
         return true;
     }
@@ -18,12 +27,12 @@ public:
         
         int n=graph.size();
         vector<int>col(n,-1);
+        
         for(int i=0;i<n;i++)
         {
+            int curr=0;
             if(col[i]==-1)
-            {
-                if(!dfs(i,graph,0,col)) return false;
-            }
+            if(!help(i,graph,col,curr)) return false;
         }
         return true;
     }
