@@ -2,39 +2,42 @@ class Solution {
 public:
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start_node, int end_node) {
         
-        vector<pair<int,double>>adj[n];
-        for(int i=0;i<edges.size();i++)
+        int m=edges.size();
+        unordered_map<int,vector<pair<int,double>>>graph;
+
+        for(int i=0;i<m;i++)
         {
             int u=edges[i][0];
             int v=edges[i][1];
-            double prob=succProb[i];
-            adj[u].push_back({v,prob});
-            adj[v].push_back({u,prob});
+            graph[u].push_back({v,succProb[i]});
+            graph[v].push_back({u,succProb[i]});
         }
+
+
+
         priority_queue<pair<double,int>>q;
         q.push({1.0,start_node});
-        vector<double>p(n,0);
-        p[start_node]=1;
-        double ans=0;
+    double ans=0.0;
+    vector<double>success(n,0.0);
+    success[start_node]=1.0;
         while(!q.empty())
         {
             auto it=q.top();
             q.pop();
-            int node=it.second;
             double prob=it.first;
+            int node=it.second;
             if(node==end_node)
+            ans=max(ans,prob);
+            for(auto adj:graph[node])
             {
-                ans=max(ans,prob);
-            }
-            for(auto it:adj[node])
-            {
-                 int adjNode=it.first;
-                 double pr=it.second;
-                 if(p[adjNode]<(pr*prob))
-                 {
-                    p[adjNode]=(pr*prob);
-                    q.push({(pr*prob),adjNode});
-                 }
+
+                double sucP=adj.second;
+                int adjNode=adj.first;
+                if((sucP*prob)>(success[adjNode]))
+                {
+                    success[adjNode]=(sucP*prob);
+                      q.push({(sucP*prob),adjNode});
+                }
             }
         }
         return ans;
