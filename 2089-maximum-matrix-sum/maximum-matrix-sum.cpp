@@ -1,22 +1,24 @@
 class Solution {
+#define ll long long
 public:
     long long maxMatrixSum(vector<vector<int>>& matrix) {
-        int minValue = INT_MAX;
-        long long sum = 0;
-        int negCount = 0;
-
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[0].size(); j++) {
-                if (matrix[i][j] < 0)
-                    negCount++;
-                int absValue = abs(matrix[i][j]);
-                minValue = min(minValue, absValue);
-                sum += absValue;
-            }
-        }
-
-        if (negCount % 2 == 0)
-            return sum;
-        return sum - 2 * minValue;
+        
+       ll n=matrix.size();
+       ll m=matrix[0].size();
+     ll count=0;
+     ll sum=0;
+     ll minEle=INT_MAX;
+       for(int i=0;i<n;i++)
+       {
+         for(int j=0;j<m;j++)
+         {
+            sum+=abs(matrix[i][j]);
+        
+            minEle=min(minEle,(ll)abs(matrix[i][j]));
+            if(matrix[i][j]<0) count++;
+         }
+       }
+       if(count%2==0) return sum;
+       return sum-2*(abs(minEle));
     }
 };
