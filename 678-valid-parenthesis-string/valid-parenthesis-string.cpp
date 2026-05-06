@@ -2,34 +2,38 @@ class Solution {
 public:
     bool checkValidString(string s) {
         
-        stack<char>bracket;
-        stack<char>star;
+        stack<int>st,st2;
         int n=s.size();
         for(int i=0;i<n;i++)
         {
-            if(s[i]=='(') bracket.push(i);
+            if(s[i]=='(') st.push(i);
             else if(s[i]==')')
             {
-                if(!bracket.empty()) bracket.pop();
-                else 
+                if(!st.empty())
+                st.pop();
+                else if(!st2.empty())
                 {
-                    if(!star.empty()) star.pop();
-                    else return false;
+                    st2.pop();
                 }
-            } 
-            else
+                else
+                 return false;
+            }
+            else 
             {
-              star.push(i);
+                st2.push(i);
             }
         }
-
-        while(!bracket.empty() && !star.empty())
+        while(!st.empty() && !st2.empty())
         {
-            if(bracket.top()>star.top()) return false;
-            bracket.pop();
-            star.pop();
+            if(st.top()<st2.top())
+            {
+                st.pop();
+                st2.pop();
+            }
+            else
+            return false;
         }
-        if(bracket.size()>0) return false;
+        if(!st.empty()) return false;
         return true;
     }
 };
